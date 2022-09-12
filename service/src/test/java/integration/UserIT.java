@@ -1,13 +1,12 @@
 package integration;
 
-import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class UserIT {
-
     @Test
-    public void test(){
-        assertTrue(true);
+    public void test() {
+        Assertions.assertTrue(true);
     }
 }
