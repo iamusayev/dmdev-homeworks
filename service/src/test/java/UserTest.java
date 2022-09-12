@@ -6,5 +6,4 @@ public class UserTest {
     public void test() {
         Assertions.assertTrue(true);
     }
-
 }
