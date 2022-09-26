@@ -65,8 +65,6 @@ public abstract class IntegrationTestBase {
 
     private static final String DROP_TABLE = "DROP  TABLE IF EXISTS %s CASCADE";
 
-    public static final Integer EXISTING_ID = 1;
-    public static final Integer NON_EXISTENT_ID = Integer.MAX_VALUE;
 
     @BeforeEach
     @SneakyThrows
