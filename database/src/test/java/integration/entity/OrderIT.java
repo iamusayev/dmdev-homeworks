@@ -25,22 +25,41 @@ public class OrderIT extends IntegrationTestBase {
     @Test
     void shouldSaveCorrectEntity() {
         var expectedOrder = ORDER;
+        Order actualOrder;
 
+        try(session){
+        session.beginTransaction();
         session.save(expectedOrder);
-        Order actualOrder = session.get(Order.class, 2);
+        actualOrder = session.get(Order.class, TestObjectUtils.JUST_CREATED_ID);
+        session.getTransaction().commit();
+        }
 
         assertThat(actualOrder).isNotNull();
     }
 
     @Test
     void shouldFindExistingEntity() {
-        Order order = session.get(Order.class, IntegrationTestBase.EXISTING_ID);
+        Order order;
+        
+        try(session){
+        session.beginTransaction();
+        order = session.get(Order.class, TestObjectUtils.EXISTING_ID);
+        session.getTransaction().commit();
+        }
+        
         assertThat(order).isNotNull();
     }
 
     @Test
     void shouldReturnEmptyIfEntityDoesNotExist() {
-        Order order = session.get(Order.class, IntegrationTestBase.NON_EXISTENT_ID);
+        Order order;
+        
+        try(session){
+        session.beginTransaction();
+        order = session.get(Order.class, TestObjectUtils.EXISTING_ID);
+        session.getTransaction().commit();
+        }
+    
         assertThat(order).isNull();
     }
 
@@ -50,9 +69,14 @@ public class OrderIT extends IntegrationTestBase {
         expectedOrder.setRegistrationDate(LocalDate.of(2022,2,2));
         expectedOrder.setClosingDate(LocalDate.of(2022,1,1));
         expectedOrder.setStatus(Status.INACTIVE);
-
+        Order actualOrder;
+        
+        try(session){
+        session.beginTransaction();
         session.saveOrUpdate(expectedOrder);
-        Order actualOrder = session.get(Order.class, IntegrationTestBase.EXISTING_ID);
+        actualOrder = session.get(Order.class, TestObjectUtils.EXISTING_ID);
+        session.getTransaction().commit();
+        }
 
         assertAll(
                 () -> assertThat(expectedOrder).isNotEqualTo(actualOrder),
@@ -64,9 +88,12 @@ public class OrderIT extends IntegrationTestBase {
 
     @Test
     void shouldDeleteExistingEntity() {
+        Order oder;
+        
+        try(session){
         session.delete(TestObjectUtils.ORDER);
-
-        Order order = session.get(Order.class, IntegrationTestBase.EXISTING_ID);
+        order = session.get(Order.class, TestObjectUtils.EXISTING_ID); 
+        }
 
         assertThat(order).isNull();
     }
