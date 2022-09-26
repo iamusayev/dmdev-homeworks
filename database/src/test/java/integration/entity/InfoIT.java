@@ -22,9 +22,14 @@ public class InfoIT extends IntegrationTestBase {
     @Test
     void shouldSaveCorrectEntity() {
         var expectedInfo = INFO;
-
+        Info actualInfo;
+        
+        try(session){
+        session.beginTransaction();
         session.save(expectedInfo);
-        Info actualInfo = session.get(Info.class, 2);
+        actualInfo = session.get(Info.class, TestObjectUtils.JUST_CREATED_ID);
+        session.getTransaction().commit();
+        }
 
         assertThat(actualInfo).isNotNull();
         assertThat(expectedInfo.getPhoneNumber()).isEqualTo(actualInfo.getPhoneNumber());
@@ -32,24 +37,43 @@ public class InfoIT extends IntegrationTestBase {
 
     @Test
     void shouldFindExistingEntity() {
-        Info info = session.get(Info.class, IntegrationTestBase.EXISTING_ID);
+        Info actualInfo;
+        
+        try(session){
+        session.beginTransaction();
+        info = session.get(Info.class, TestObjectUtils.EXISTING_ID);
+        session.getTransaction().commit(); 
+        }
+        
         assertThat(info).isNotNull();
     }
 
     @Test
     void shouldReturnEmptyIfEntityDoesNotExist() {
-        Info info = session.get(Info.class, IntegrationTestBase.NON_EXISTENT_ID);
+        Info actualInfo;
+    
+        try(session){
+        session.beginTransaction();
+        info = session.get(Info.class, TestObjectUtils.EXISTING_ID);
+        session.getTransaction().commit(); 
+        }
+        
         assertThat(info).isNull();
     }
 
     @Test
     void shouldUpdateExistingEntity() {
         var expectedInfo = INFO;
+        Info actualInfo;
         expectedInfo.setAddress("anotherAddress");
         expectedInfo.setPhoneNumber("+994954543532");
 
+        try(session){
+        session.beginTransaction();
         session.saveOrUpdate(expectedInfo);
-        Info actualInfo = session.get(Info.class, IntegrationTestBase.EXISTING_ID);
+        actualInfo = session.get(Info.class, TestObjectUtils.EXISTING_ID); 
+        session.getTransaction().commit(); 
+        }
 
         assertAll(
                 () -> org.assertj.core.api.Assertions.assertThat(expectedInfo).isNotEqualTo(actualInfo),
@@ -60,10 +84,15 @@ public class InfoIT extends IntegrationTestBase {
 
     @Test
     void shouldDeleteExistingEntity() {
+        Info info;
+        
+        try(session){
+        session.beginTransaction();
         session.delete(TestObjectUtils.INFO);
-
-        Info info = session.get(Info.class, IntegrationTestBase.EXISTING_ID);
-
+        info = session.get(Info.class, TestObjectUtils.EXISTING_ID);
+        session.getTransaction().commit(); 
+        }
+       
         assertThat(info).isNull();
     }
 }
