@@ -6,6 +6,13 @@ CREATE TABLE customers (
     password VARCHAR(128) NOT NULL
 );
 
+CREATE TABLE info (
+    id SERIAL PRIMARY KEY ,
+    phone_number VARCHAR(32) NOT NULL UNIQUE ,
+    address VARCHAR(256) NOT NULL ,
+    customer_id INT REFERENCES customers (id)
+);
+
 CREATE TABLE products(
     id SERIAL PRIMARY KEY ,
     name VARCHAR(256) NOT NULL ,
@@ -28,15 +35,3 @@ CREATE TABLE product_order(
                               product_id INT REFERENCES  products(id),
                               order_id INT REFERENCES orders(id)
 );
-
-CREATE TABLE info (
-    id SERIAL PRIMARY KEY ,
-    phone_number VARCHAR(32) NOT NULL UNIQUE ,
-    address VARCHAR(256) NOT NULL ,
-    customer_id INT REFERENCES customers (id)
-);
-
-
-
-
-
