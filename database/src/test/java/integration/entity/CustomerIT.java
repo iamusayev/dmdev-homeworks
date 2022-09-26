@@ -23,24 +23,43 @@ public class CustomerIT extends IntegrationTestBase {
 
     @Test
     void shouldSaveCorrectEntity() {
-        var expectedCustomer = CUSTOMER;
-
+        Customer expectedCustomer = CUSTOMER;
+        Customer actualCustomer;
+        
+        try(session){
+        session.beginTransaction();
         session.save(expectedCustomer);
-        Customer actualCustomer = session.get(Customer.class, 2);
-
+        actualCustomer = session.get(Customer.class, TestObjectUtils.JUST_CREATED_ID);
+        session.getTransaction().commit();
+        }
+        
         assertThat(actualCustomer).isNotNull();
         assertThat(expectedCustomer.getEmail()).isEqualTo(actualCustomer.getEmail());
     }
 
     @Test
     void shouldFindExistingEntity() {
-        Customer customer = session.get(Customer.class, IntegrationTestBase.EXISTING_ID);
+        Customer customer;
+        
+        try(session){
+        session.beginTransaction();
+        customer = session.get(Customer.class, TestObjectUtils.EXISTING_ID);
+        session.getTransaction().commit();
+        }
+        
         assertThat(customer).isNotNull();
     }
 
     @Test
     void shouldReturnEmptyIfEntityDoesNotExist() {
-        Customer customer = session.get(Customer.class, IntegrationTestBase.NON_EXISTENT_ID);
+        Customer customer;
+        
+        try(session){
+        session.beginTransaction();
+        customer = session.get(Customer.class, TestObjectUtils.NON_EXISTENT_ID);
+        session.getTransaction().commit();
+        }
+        
         assertThat(customer).isNull();
     }
 
@@ -51,9 +70,14 @@ public class CustomerIT extends IntegrationTestBase {
         expectedCustomer.setFirstName("hey1337");
         expectedCustomer.setPassword("hey1337");
         expectedCustomer.setSurname("test1337");
-
+        Customer actualCustomer;
+        
+        try(session){
+        session.beginTransaction();
         session.saveOrUpdate(expectedCustomer);
-        Customer actualCustomer = session.get(Customer.class, IntegrationTestBase.EXISTING_ID);
+        actualCustomer = session.get(Customer.class, TestObjectUtils.EXISTING_ID);
+        session.getTransaction().commit();
+        }
 
         assertAll(
                 () -> assertThat(expectedCustomer).isNotEqualTo(actualCustomer),
@@ -66,9 +90,14 @@ public class CustomerIT extends IntegrationTestBase {
 
     @Test
     void shouldDeleteExistingEntity() {
+        Customer customer;
+        
+        try(session){
+        session.beginTransaction();
         session.delete(TestObjectUtils.CUSTOMER);
-
-        Customer customer = session.get(Customer.class, IntegrationTestBase.EXISTING_ID);
+        customer = session.get(Customer.class, TestObjectUtils.EXISTING_ID);
+        session.getTransaction().commit();
+        }
 
         assertThat(customer).isNull();
     }
