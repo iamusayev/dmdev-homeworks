@@ -56,7 +56,7 @@ public class OrderIT extends IntegrationTestBase {
         
         try(session){
         session.beginTransaction();
-        order = session.get(Order.class, TestObjectUtils.EXISTING_ID);
+        order = session.get(Order.class, TestObjectUtils.NON_EXISTENT_ID);
         session.getTransaction().commit();
         }
     
