@@ -19,7 +19,6 @@ public class InfoIT extends IntegrationTestBase {
 
     private final Session session = HibernateUtil.buildSession();
 
-
     @Test
     void shouldSaveCorrectEntity() {
         var expectedInfo = INFO;
@@ -67,6 +66,4 @@ public class InfoIT extends IntegrationTestBase {
 
         assertThat(info).isNull();
     }
-
-
 }

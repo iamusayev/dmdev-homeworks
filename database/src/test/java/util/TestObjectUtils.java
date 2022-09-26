@@ -36,5 +36,4 @@ public class TestObjectUtils {
             .price(BigDecimal.valueOf(16,2))
             .remainingQuantity(10)
             .build();
-
 }
