@@ -91,8 +91,10 @@ public class OrderIT extends IntegrationTestBase {
         Order oder;
         
         try(session){
+        session.beginTransaction();
         session.delete(TestObjectUtils.ORDER);
         order = session.get(Order.class, TestObjectUtils.EXISTING_ID); 
+        session.getTransaction().commit();
         }
 
         assertThat(order).isNull();
