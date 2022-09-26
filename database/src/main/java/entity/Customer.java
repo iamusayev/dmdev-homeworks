@@ -34,5 +34,5 @@ public class Customer {
     private String password;
 
     @Transient
-    private List<Product> products;
+    private List<Order> orders;
 }
