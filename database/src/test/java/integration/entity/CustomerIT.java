@@ -21,7 +21,6 @@ public class CustomerIT extends IntegrationTestBase {
 
     private final Session session = HibernateUtil.buildSession();
 
-
     @Test
     void shouldSaveCorrectEntity() {
         var expectedCustomer = CUSTOMER;
