@@ -72,6 +72,4 @@ public class ProductIT extends IntegrationTestBase {
 
         assertThat(product).isNull();
     }
-
-
 }
