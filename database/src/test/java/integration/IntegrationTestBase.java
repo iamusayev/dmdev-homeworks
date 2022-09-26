@@ -27,7 +27,7 @@ public abstract class IntegrationTestBase {
                 phone_number VARCHAR(32) NOT NULL ,
                 address VARCHAR(256) NOT NULL,
                 customer_id INT REFERENCES customers (id)
-            );
+                );
             
             """;
 
