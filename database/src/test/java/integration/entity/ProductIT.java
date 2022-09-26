@@ -52,7 +52,7 @@ public class ProductIT extends IntegrationTestBase {
 
     @Test
     void shouldReturnEmptyIfEntityDoesNotExist() {
-      Product product;
+        Product product;
         
         try(session){
         session.beginTransaction();
