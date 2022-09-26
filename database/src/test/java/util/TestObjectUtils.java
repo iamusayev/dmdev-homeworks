@@ -39,4 +39,5 @@ public class TestObjectUtils {
             
     public static final Integer EXISTING_ID = 1;
     public static final Integer NON_EXISTENT_ID = Integer.MAX_VALUE;
+    public static final Integer JUST_CREATED_ID = 2;
 }
