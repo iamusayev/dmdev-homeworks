@@ -25,22 +25,41 @@ public class ProductIT extends IntegrationTestBase {
     @Test
     void shouldSaveCorrectEntity() {
         var expectedProduct = PRODUCT;
-
+        Product actualProduct;
+        
+        try(session){
+        session.beginTransaction();
         session.save(expectedProduct);
-        Product actualProduct = session.get(Product.class, 2);
+        actualProduct = session.get(Product.class, TestObjectUtils.JUST_CREATED_ID);
+        session.getTransaction().commit();
+        }
 
         assertThat(actualProduct).isNotNull();
     }
 
     @Test
     void shouldFindExistingEntity() {
-        Product product = session.get(Product.class, IntegrationTestBase.EXISTING_ID);
+        Product product;
+        
+        try(session){
+        session.beginTransaction();
+        product = session.get(Product.class, TestObjectUtils.EXISTING_ID);
+        session.getTransaction().commit();
+        }
+        
         assertThat(product).isNotNull();
     }
 
     @Test
     void shouldReturnEmptyIfEntityDoesNotExist() {
-        Product product = session.get(Product.class, IntegrationTestBase.NON_EXISTENT_ID);
+      Product product;
+        
+        try(session){
+        session.beginTransaction();
+        product = session.get(Product.class, TestObjectUtils.NON_EXISTENT_ID);
+        session.getTransaction().commit();
+        }
+            
         assertThat(product).isNull();
     }
 
@@ -51,9 +70,14 @@ public class ProductIT extends IntegrationTestBase {
         expectedProduct.setDescription("anotherDescription");
         expectedProduct.setPrice(BigDecimal.valueOf(100));
         expectedProduct.setRemainingQuantity(99);
+        Product actualOrder;
 
+        try(session){
+        session.beginTransaction();
         session.saveOrUpdate(expectedProduct);
-        Product actualOrder = session.get(Product.class, IntegrationTestBase.EXISTING_ID);
+        actualOrder = session.get(Product.class, TestObjectUtils.EXISTING_ID);
+        session.getTransaction().commit();
+        }
 
         assertAll(
                 () -> assertThat(expectedProduct).isNotEqualTo(actualOrder),
@@ -66,9 +90,14 @@ public class ProductIT extends IntegrationTestBase {
 
     @Test
     void shouldDeleteExistingEntity() {
+        Product product;
+        
+        try(session){
+        session.beginTransaction();
         session.delete(TestObjectUtils.PRODUCT);
-
-        Product product = session.get(Product.class, IntegrationTestBase.EXISTING_ID);
+        product = session.get(Product.class, TestObjectUtils.EXISTING_ID);
+        session.getTransaction().commit();
+        }
 
         assertThat(product).isNull();
     }
