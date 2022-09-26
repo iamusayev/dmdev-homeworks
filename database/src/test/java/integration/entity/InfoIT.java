@@ -67,6 +67,4 @@ public class InfoIT extends IntegrationTestBase {
 
         assertThat(info).isNull();
     }
-
-
 }
