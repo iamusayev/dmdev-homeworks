@@ -25,7 +25,7 @@ public abstract class IntegrationTestBase {
             CREATE TABLE info (
                 id SERIAL PRIMARY KEY ,
                 phone_number VARCHAR(32) NOT NULL ,
-                address VARCHAR(256),
+                address VARCHAR(256) NOT NULL,
                 customer_id INT REFERENCES customers (id)
             );
             
@@ -37,8 +37,8 @@ public abstract class IntegrationTestBase {
                 id SERIAL PRIMARY KEY ,
                 name VARCHAR(256) NOT NULL ,
                 description TEXT NOT NULL ,
-                price NUMERIC (16,2),
-                remaining_quantity INT
+                price NUMERIC (16,2) NOT NULL,
+                remaining_quantity INT NOT NULL
                 );
                     
             """;
@@ -47,8 +47,8 @@ public abstract class IntegrationTestBase {
             CREATE TABLE orders (
                 id SERIAL PRIMARY KEY ,
                 registration_date DATE,
-                closing_date DATE,
-                status VARCHAR(32),
+                closing_date DATE NOT NULL,
+                status VARCHAR(32) NOT NULL,
                 customer_id INT REFERENCES customers(id)
                 );
                        
