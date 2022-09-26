@@ -54,7 +54,7 @@ public class InfoIT extends IntegrationTestBase {
     
         try(session){
         session.beginTransaction();
-        info = session.get(Info.class, TestObjectUtils.EXISTING_ID);
+        info = session.get(Info.class, TestObjectUtils.NON_EXISTENT_ID);
         session.getTransaction().commit(); 
         }
         
