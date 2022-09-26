@@ -91,7 +91,6 @@ public abstract class IntegrationTestBase {
             session.save(TestObjectUtils.ORDER);
             session.save(TestObjectUtils.PRODUCT);
 
-
             session.getTransaction().commit();
         }
     }
