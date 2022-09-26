@@ -12,6 +12,10 @@ import model.Status;
 @UtilityClass
 public class TestObjectUtils {
 
+    public static final Integer EXISTING_ID = 1;
+    public static final Integer NON_EXISTENT_ID = Integer.MAX_VALUE;
+    public static final Integer JUST_CREATED_ID = 2;
+
     public static final Customer CUSTOMER = Customer.builder()
             .surname("test")
             .password("test1337")
@@ -36,8 +40,4 @@ public class TestObjectUtils {
             .price(BigDecimal.valueOf(16,2))
             .remainingQuantity(10)
             .build();
-            
-    public static final Integer EXISTING_ID = 1;
-    public static final Integer NON_EXISTENT_ID = Integer.MAX_VALUE;
-    public static final Integer JUST_CREATED_ID = 2;
 }
