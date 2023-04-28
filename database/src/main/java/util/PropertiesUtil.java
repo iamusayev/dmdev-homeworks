@@ -8,7 +8,6 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class PropertiesUtil {
 
-
     private static final Properties PROPERTIES = new Properties();
 
     static {
