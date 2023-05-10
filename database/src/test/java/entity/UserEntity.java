@@ -20,4 +20,4 @@ public class UserEntity {
     private Gender gender;
     private Role role;
     private LocalDate birthday;
-
+}
